@@ -112,6 +112,16 @@ $("#search-form").on("submit", function (e) {
         .then(function (data) {
           console.log(data);
 
+          // 5-day Forecast
+          const forecast = $("#forecast").addClass("d-flex");
+          // Clear previous forecast
+          forecast.empty();
+
+          // Filtering response for a specific set of weather info as the API returns multiple
+          const filteredData = data.list.filter((element) => {
+            element.dt_txt.includes("12:00:00");
+          });
+
           displayHistory();
         });
     });
