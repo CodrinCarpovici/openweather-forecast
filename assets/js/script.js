@@ -7,7 +7,7 @@ let lat, lon;
 // On input submit, modify the cityName stored in the variable
 $("#search-form").on("submit", function (e) {
   e.preventDefault();
-  const cityName = $('#search-input').val().trim();
+  const cityName = $("#search-input").val().trim();
   // City Query URL
   const cityQueryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
 
@@ -24,6 +24,15 @@ $("#search-form").on("submit", function (e) {
 
       // Constructing the API call using the lan and lon values
       const queryURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+
+      // When the data has been fetched we will save the search in the history
+      const updateHistory = (city) => {
+        let history = JSON.parse(localStorage.getItem("searchHistory")) || [];
+        history.push(city);
+        localStorage.setItem("searchHistory", JSON.stringify(history));
+      };
+
+      updateHistory(cityName);
 
       // Fectching the data using the URL
       fetch(queryURL)
