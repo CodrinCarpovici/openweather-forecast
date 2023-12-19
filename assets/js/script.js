@@ -7,10 +7,10 @@ let lat, lon;
 // Document Elements
 const historyDiv = $("#history");
 
-const displayHistory = () => {
-  // Display the search History
-  let history = JSON.parse(localStorage.getItem("searchHistory")) || [];
+// Display the search History
+let history = JSON.parse(localStorage.getItem("searchHistory")) || [];
 
+const displayHistory = () => {
   // Clear History to prepare for updated array
   historyDiv.empty();
 
@@ -18,7 +18,7 @@ const displayHistory = () => {
   for (let city of history) {
     const historyButton = $("<button>")
       .addClass("btn btn-secondary mb-3")
-      .attr("data-city", city) // Use of data attribute instead of ID to store the name of it and use it to generate the forecast
+      .data("city", city) // Use of data attribute instead of ID to store the name of it and use it to generate the forecast
       .text(city);
     historyDiv.prepend(historyButton);
   }
@@ -86,7 +86,6 @@ const generateForecast = (city) => {
           return response.json();
         })
         .then(function (data) {
-
           // 5-day Forecast
           const forecast = $("#forecast").addClass("d-flex");
           // Clear previous forecast
@@ -146,6 +145,12 @@ $("#search-form").on("submit", function (e) {
   // Capitalizing first letter of input value
   const cityName = cityValue.charAt(0).toUpperCase() + cityValue.slice(1);
 
+  // Checking if search is not in history already
+  if (!history.includes(cityName)) {
+    history.push(cityName);
+    localStorage.setItem("searchHistory", JSON.stringify(history));
+  }
+
   // Calling generateForecast with the current city
   generateForecast(cityName);
 });
@@ -155,6 +160,6 @@ historyDiv.on("click", "button", function () {
   let currentCity = $(this).data("city");
   // GenerateForecast call to display the same forecast as on search
   generateForecast(currentCity);
-})
+});
 // Initial display of search history
 displayHistory();
