@@ -126,6 +126,8 @@ $("#search-form").on("submit", function (e) {
             const box = $("<div>").addClass("forecast-box");
             // Getting the date
             const date = dayjs(dayElement.dt_txt).format("DD/MM/YYYY");
+            
+            const dateHeader = $('<h5>').text(date)
             // Get a corresponding Icon from the response
             const iconCode = dayElement.weather[0].icon;
             const iconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
@@ -147,7 +149,7 @@ $("#search-form").on("submit", function (e) {
             );
 
             // Appending everything to the box and then to the forecast section
-            box.append(date, iconImage);
+            box.append(dateHeader, iconImage);
             box.append(temperature, wind, humidity);
 
             forecast.append(box);

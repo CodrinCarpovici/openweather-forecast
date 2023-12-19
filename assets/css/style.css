@@ -1,9 +1,16 @@
 #today {
-    outline: 1px solid black;
-    padding: 5px;
-    background: #8ec1ff;
+  outline: 1px solid black;
+  padding: 5px;
+  background: #8ec1ff;
 }
 
-.forecast-box{
-    width: auto;
+#forecast {
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.forecast-box {
+  width: auto;
+  background: #2d3e50;
+  color: white;
 }
