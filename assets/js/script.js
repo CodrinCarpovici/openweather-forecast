@@ -26,7 +26,6 @@ const displayHistory = () => {
   }
 };
 
-
 // On input submit, modify the cityName stored in the variable
 $("#search-form").on("submit", function (e) {
   // Preventing Default
@@ -119,4 +118,3 @@ $("#search-form").on("submit", function (e) {
 });
 
 displayHistory();
-
