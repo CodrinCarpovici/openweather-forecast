@@ -54,22 +54,23 @@ $("#search-form").on("submit", function (e) {
         .then(function (data) {
           console.log(data);
 
-          // Display the search History
-          let history = JSON.parse(localStorage.getItem("searchHistory")) || [];
-
-          // Clear History to prepare for updated array
-          historyDiv.empty();
-
-          // For each element of the history array, generate a button
-          for (let city of history) {
-            const historyButton = $("<button>")
-              .addClass("list-group-item btn btn-secondary mb-3")
-              .text(city)
-              .on("click", function () {
-                // TO IMPLEMENT DISPLAY FUCNTION
-              });
-            historyDiv.prepend(historyButton);
-          }
         });
     });
 });
+
+// Display the search History
+let history = JSON.parse(localStorage.getItem("searchHistory")) || [];
+
+// Clear History to prepare for updated array
+historyDiv.empty();
+
+// For each element of the history array, generate a button
+for (let city of history) {
+  const historyButton = $("<button>")
+    .addClass("btn btn-secondary mb-3")
+    .text(city)
+    .on("click", function () {
+      // TO IMPLEMENT DISPLAY FUCNTION
+    });
+  historyDiv.prepend(historyButton);
+}
