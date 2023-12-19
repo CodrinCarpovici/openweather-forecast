@@ -18,24 +18,16 @@ const displayHistory = () => {
   for (let city of history) {
     const historyButton = $("<button>")
       .addClass("btn btn-secondary mb-3")
-      .text(city)
-      .on("click", function () {
-        // TO IMPLEMENT DISPLAY FUNCTION
-      });
+      .attr("data-city", city) // Use data attribute instead of ID
+      .text(city);
     historyDiv.prepend(historyButton);
   }
 };
 
-// On input submit, modify the cityName stored in the variable
-$("#search-form").on("submit", function (e) {
-  // Preventing Default
-  e.preventDefault();
-  // Storing input value
-  const cityValue = $("#search-input").val().trim();
-  // Capitalizing first letter of input value
-  const cityName = cityValue.charAt(0).toUpperCase() + cityValue.slice(1);
+// Function to generate the forecast
+const generateForecast = (city) => {
   // City Query URL
-  const cityQueryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
+  const cityQueryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
 
   // Fetching data using the city name
   fetch(cityQueryURL)
@@ -44,38 +36,24 @@ $("#search-form").on("submit", function (e) {
     })
     .then(function (data) {
       console.log(data);
-      // Extracting the lan and lon from the response
+      // Extracting the lat and lon from the response
       lat = data.coord.lat;
       lon = data.coord.lon;
 
-      // Constructing the API call using the lan and lon values
+      // Constructing the API call using the lat and lon values
       const queryURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
-
-      // When the data has been fetched we will save the search in the history
-      const updateHistory = (city) => {
-        let history = JSON.parse(localStorage.getItem("searchHistory")) || [];
-
-        // Checking if search is not in history already
-        if (!history.includes(city)) {
-          history.push(city);
-          localStorage.setItem("searchHistory", JSON.stringify(history));
-        }
-      };
-
-      // Calling history update
-      updateHistory(cityName);
 
       // Current day forecast
       const currentDay = $("#today");
 
-      // Celar previous content
+      // Clear previous content
       currentDay.empty();
 
-      // Get todays date in a basic format
+      // Get today's date in a basic format
       const dateToday = dayjs().format("DD/MM/YYYY");
 
       // Create a title for the box
-      const boxTitle = $("<h2>").text(`${cityName} (${dateToday})`);
+      const boxTitle = $("<h2>").text(`${city} (${dateToday})`);
 
       // Get a corresponding Icon from the response
       const iconCode = data.weather[0].icon;
@@ -95,7 +73,7 @@ $("#search-form").on("submit", function (e) {
       // Appending the header container to the box
       currentDay.append(headerDiv);
 
-      // Display temperature wind humidity
+      // Display temperature, wind, humidity
       const temperature = $("<p>").text(`Temperature: ${data.main.temp} °C`);
       const wind = $("<p>").text(`Wind: ${data.wind.speed} KPH`);
       const humidity = $("<p>").text(`Humidity: ${data.main.humidity}%`);
@@ -103,7 +81,7 @@ $("#search-form").on("submit", function (e) {
       // Append the lines to the current day forecast
       currentDay.append(temperature, wind, humidity);
 
-      // Fectching the data using the URL
+      // Fetching the data using the URL
       fetch(queryURL)
         .then(function (response) {
           return response.json();
@@ -126,8 +104,8 @@ $("#search-form").on("submit", function (e) {
             const box = $("<div>").addClass("forecast-box");
             // Getting the date
             const date = dayjs(dayElement.dt_txt).format("DD/MM/YYYY");
-            
-            const dateHeader = $('<h5>').text(date)
+
+            const dateHeader = $("<h5>").text(date);
             // Get a corresponding Icon from the response
             const iconCode = dayElement.weather[0].icon;
             const iconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
@@ -139,7 +117,7 @@ $("#search-form").on("submit", function (e) {
               class: "weather-icon",
             });
 
-            // Retrieving temperature wind humidity
+            // Retrieving temperature, wind, humidity
             const temperature = $("<p>").text(
               `Temperature: ${dayElement.main.temp} °C`
             );
@@ -159,6 +137,20 @@ $("#search-form").on("submit", function (e) {
           displayHistory();
         });
     });
+};
+
+// On input submit, modify the cityName stored in the variable
+$("#search-form").on("submit", function (e) {
+  // Preventing Default
+  e.preventDefault();
+  // Storing input value
+  const cityValue = $("#search-input").val().trim();
+  // Capitalizing first letter of input value
+  const cityName = cityValue.charAt(0).toUpperCase() + cityValue.slice(1);
+
+  // Calling generateForecast with the current city
+  generateForecast(cityName);
 });
 
+// Initial display of search history
 displayHistory();
