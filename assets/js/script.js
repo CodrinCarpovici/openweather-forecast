@@ -70,7 +70,7 @@ for (let city of history) {
     .addClass("btn btn-secondary mb-3")
     .text(city)
     .on("click", function () {
-      // TO IMPLEMENT DISPLAY FUCNTION
+      // TO IMPLEMENT DISPLAY FUNCTION
     });
   historyDiv.prepend(historyButton);
 }
