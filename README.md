@@ -21,7 +21,7 @@ N/A
 
 Go To: [codrincarpovici.github.io/openweather-forecast/](https://codrincarpovici.github.io/openweather-forecast/) and view the website. 
 
-Once on the website you are presented with a search input box and a button that you can click to search. After adding a city to the input bopx and clicking search you will be able to see the current weather for today and the 5 day forecast below it. You will also notice that your search has been saved and stored in a button below the search form. Clicking on past history search buttons will allow you to view the forecastst for the specified city again. those search buttons will also persist between page refreshes and be available to use.
+Once on the website you are presented with a search input box and a button that you can click to search. After adding a city to the input box and clicking search you will be able to see the current weather for today and the 5 day forecast below it. You will also notice that your search has been saved and stored in a button below the search form. Clicking on past history search buttons will allow you to view the forecastst for the specified city again. Those search buttons will also persist between page refreshes and be available to use.
 
 ![OpenWeather API Forecast](assets/images/forecastSS.png)
 
