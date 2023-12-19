@@ -84,7 +84,6 @@ $("#search-form").on("submit", function (e) {
       const iconImage = $("<img>").attr({
         src: iconUrl,
         alt: "Weather Icon",
-        style: "box-shadow:",
         class: "weather-icon",
       });
 
@@ -119,8 +118,39 @@ $("#search-form").on("submit", function (e) {
 
           // Filtering response for a specific set of weather info as the API returns multiple
           const filteredData = data.list.filter((element) => {
-            element.dt_txt.includes("12:00:00");
+            return element.dt_txt.includes("12:00:00");
           });
+
+          // Looping through the first 5 entries of the filtered array and generating a suitable box for each one
+          for (let dayElement of filteredData.slice(0, 5)) {
+            const box = $("<div>").addClass("forecast-box");
+            // Getting the date
+            const date = dayjs(dayElement.dt_txt).format("DD/MM/YYYY");
+            // Get a corresponding Icon from the response
+            const iconCode = dayElement.weather[0].icon;
+            const iconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
+
+            // Creating Weather Icon for each box
+            const iconImage = $("<img>").attr({
+              src: iconUrl,
+              alt: "Weather Icon",
+              class: "weather-icon",
+            });
+
+            // Retrieving temperature wind humidity
+            const temperature = $("<p>").text(
+              `Temperature: ${dayElement.main.temp} °C`
+            );
+            const wind = $("<p>").text(`Wind: ${dayElement.wind.speed} KPH`);
+            const humidity = $("<p>").text(
+              `Humidity: ${dayElement.main.humidity}%`
+            );
+
+            box.append(date, iconImage);
+            box.append(temperature, wind, humidity);
+
+            forecast.append(box);
+          }
 
           displayHistory();
         });
