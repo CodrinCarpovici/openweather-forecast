@@ -146,12 +146,14 @@ $("#search-form").on("submit", function (e) {
               `Humidity: ${dayElement.main.humidity}%`
             );
 
+            // Appending everything to the box and then to the forecast section
             box.append(date, iconImage);
             box.append(temperature, wind, humidity);
 
             forecast.append(box);
           }
 
+          // Refreshing display history
           displayHistory();
         });
     });
