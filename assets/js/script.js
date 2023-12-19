@@ -7,6 +7,26 @@ let lat, lon;
 // Document Elements
 const historyDiv = $("#history");
 
+const displayHistory = () => {
+  // Display the search History
+  let history = JSON.parse(localStorage.getItem("searchHistory")) || [];
+
+  // Clear History to prepare for updated array
+  historyDiv.empty();
+
+  // For each element of the history array, generate a button
+  for (let city of history) {
+    const historyButton = $("<button>")
+      .addClass("btn btn-secondary mb-3")
+      .text(city)
+      .on("click", function () {
+        // TO IMPLEMENT DISPLAY FUNCTION
+      });
+    historyDiv.prepend(historyButton);
+  }
+};
+
+
 // On input submit, modify the cityName stored in the variable
 $("#search-form").on("submit", function (e) {
   // Preventing Default
@@ -66,7 +86,7 @@ $("#search-form").on("submit", function (e) {
         src: iconUrl,
         alt: "Weather Icon",
         style: "box-shadow:",
-        class: "weather-icon"
+        class: "weather-icon",
       });
 
       // Container to flex title and icons
@@ -92,23 +112,11 @@ $("#search-form").on("submit", function (e) {
         })
         .then(function (data) {
           console.log(data);
+
+          displayHistory();
         });
     });
 });
 
-// Display the search History
-let history = JSON.parse(localStorage.getItem("searchHistory")) || [];
+displayHistory();
 
-// Clear History to prepare for updated array
-historyDiv.empty();
-
-// For each element of the history array, generate a button
-for (let city of history) {
-  const historyButton = $("<button>")
-    .addClass("btn btn-secondary mb-3")
-    .text(city)
-    .on("click", function () {
-      // TO IMPLEMENT DISPLAY FUNCTION
-    });
-  historyDiv.prepend(historyButton);
-}
