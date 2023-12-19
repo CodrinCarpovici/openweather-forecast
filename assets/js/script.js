@@ -18,7 +18,7 @@ const displayHistory = () => {
   for (let city of history) {
     const historyButton = $("<button>")
       .addClass("btn btn-secondary mb-3")
-      .attr("data-city", city) // Use data attribute instead of ID
+      .attr("data-city", city) // Use of data attribute instead of ID to store the name of it and use it to generate the forecast
       .text(city);
     historyDiv.prepend(historyButton);
   }
@@ -35,7 +35,6 @@ const generateForecast = (city) => {
       return response.json();
     })
     .then(function (data) {
-      console.log(data);
       // Extracting the lat and lon from the response
       lat = data.coord.lat;
       lon = data.coord.lon;
@@ -87,7 +86,6 @@ const generateForecast = (city) => {
           return response.json();
         })
         .then(function (data) {
-          console.log(data);
 
           // 5-day Forecast
           const forecast = $("#forecast").addClass("d-flex");
@@ -152,5 +150,11 @@ $("#search-form").on("submit", function (e) {
   generateForecast(cityName);
 });
 
+// Displaying weather information from history button clicks
+historyDiv.on("click", "button", function () {
+  let currentCity = $(this).data("city");
+  // GenerateForecast call to display the same forecast as on search
+  generateForecast(currentCity);
+})
 // Initial display of search history
 displayHistory();
