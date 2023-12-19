@@ -28,8 +28,11 @@ $("#search-form").on("submit", function (e) {
       // When the data has been fetched we will save the search in the history
       const updateHistory = (city) => {
         let history = JSON.parse(localStorage.getItem("searchHistory")) || [];
-        history.push(city);
-        localStorage.setItem("searchHistory", JSON.stringify(history));
+
+        if (!history.includes(city)) {
+          history.push(city);
+          localStorage.setItem("searchHistory", JSON.stringify(history));
+        }
       };
 
       updateHistory(cityName);
