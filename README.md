@@ -29,7 +29,7 @@ Once on the website you are presented with a search input box and a button that 
 
 ## Credits
 
-N/A
+N/A 
 
 ## License
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
