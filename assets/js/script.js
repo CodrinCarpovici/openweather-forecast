@@ -47,17 +47,35 @@ $("#search-form").on("submit", function (e) {
       updateHistory(cityName);
 
       // Current day forecast
-      const currentDay = $('#today');
+      const currentDay = $("#today");
 
       // Celar previous content
       currentDay.empty();
 
       // Get todays date in a basic format
-      const dateToday = dayjs().format('DD/MM/YYYY');
+      const dateToday = dayjs().format("DD/MM/YYYY");
 
       // Create a title for the box
       const boxTitle = $("<h2>").text(`${cityName} (${dateToday})`);
-      currentDay.append(boxTitle);
+
+      // Get a corresponding Icon from the response
+      const iconCode = data.weather[0].icon;
+      const iconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
+
+      const iconImage = $("<img>").attr({
+        src: iconUrl,
+        alt: "Weather Icon",
+        style: "box-shadow:",
+        class: "weather-icon"
+      });
+
+      // Container to flex title and icons
+      const headerDiv = $("<div>").addClass("d-flex align-items-center");
+
+      // Appending title and icon to the container
+      headerDiv.append(boxTitle, iconImage);
+      // Appending the header container to the box
+      currentDay.append(headerDiv);
 
       // Display temperature wind humidity
       const temperature = $("<p>").text(`Temperature: ${data.main.temp} °C`);
@@ -74,7 +92,6 @@ $("#search-form").on("submit", function (e) {
         })
         .then(function (data) {
           console.log(data);
-
         });
     });
 });
