@@ -4,7 +4,7 @@ const apiKey = "d7b53c91bdd2abe33da074c99abbbe36";
 // Variables
 let lat, lon;
 
-// On input change, modify the cityName stored in the variable
+// On input submit, modify the cityName stored in the variable
 $("#search-form").on("submit", function (e) {
   e.preventDefault();
   const cityName = $('#search-input').val().trim();
