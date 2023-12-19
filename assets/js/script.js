@@ -5,10 +5,11 @@ const apiKey = "d7b53c91bdd2abe33da074c99abbbe36";
 let lat, lon;
 
 // On input change, modify the cityName stored in the variable
-$("#search-input").on("change", function () {
-  const cityName = $(this).val().trim();
+$("#search-form").on("submit", function (e) {
+  e.preventDefault();
+  const cityName = $('#search-input').val().trim();
   // City Query URL
-  const cityQueryURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
+  const cityQueryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
 
   // Fetching data using the city name
   fetch(cityQueryURL)
