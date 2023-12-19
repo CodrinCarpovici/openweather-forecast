@@ -54,6 +54,19 @@ $("#search-form").on("submit", function (e) {
         .then(function (data) {
           console.log(data);
 
+          // Current day forecast
+          const currentDay = $('#today');
+
+          // Celar previous content
+          currentDay.empty();
+
+          // Get todays date in a basic format
+          const dateToday = dayjs().format('DD/MM/YYYY');
+
+          // Create a title for the box
+          const boxTitle = $("<h2>").text(`${cityName} (${dateToday})`);
+          currentDay.append(boxTitle);
+
         });
     });
 });
