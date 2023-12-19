@@ -99,7 +99,7 @@ const generateForecast = (city) => {
 
           // Looping through the first 5 entries of the filtered array and generating a suitable box for each one
           for (let dayElement of filteredData.slice(0, 5)) {
-            const box = $("<div>").addClass("forecast-box");
+            const box = $("<div>").addClass("forecast-box mt-2 col-lg-2 col-md-6 col-sm-12 mx-2");
             // Getting the date
             const date = dayjs(dayElement.dt_txt).format("DD/MM/YYYY");
 

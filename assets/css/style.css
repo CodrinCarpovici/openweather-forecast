@@ -5,8 +5,8 @@
 }
 
 #forecast {
-  justify-content: space-between;
   padding: 10px;
+  justify-content: center;
 }
 
 .forecast-box {
