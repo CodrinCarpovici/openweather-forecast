@@ -46,6 +46,27 @@ $("#search-form").on("submit", function (e) {
       // Calling history update
       updateHistory(cityName);
 
+      // Current day forecast
+      const currentDay = $('#today');
+
+      // Celar previous content
+      currentDay.empty();
+
+      // Get todays date in a basic format
+      const dateToday = dayjs().format('DD/MM/YYYY');
+
+      // Create a title for the box
+      const boxTitle = $("<h2>").text(`${cityName} (${dateToday})`);
+      currentDay.append(boxTitle);
+
+      // Display temperature wind humidity
+      const temperature = $("<p>").text(`Temperature: ${data.main.temp} °C`);
+      const wind = $("<p>").text(`Wind: ${data.wind.speed} KPH`);
+      const humidity = $("<p>").text(`Humidity: ${data.main.humidity}%`);
+
+      // Append the lines to the current day forecast
+      currentDay.append(temperature, wind, humidity);
+
       // Fectching the data using the URL
       fetch(queryURL)
         .then(function (response) {
@@ -53,19 +74,6 @@ $("#search-form").on("submit", function (e) {
         })
         .then(function (data) {
           console.log(data);
-
-          // Current day forecast
-          const currentDay = $('#today');
-
-          // Celar previous content
-          currentDay.empty();
-
-          // Get todays date in a basic format
-          const dateToday = dayjs().format('DD/MM/YYYY');
-
-          // Create a title for the box
-          const boxTitle = $("<h2>").text(`${cityName} (${dateToday})`);
-          currentDay.append(boxTitle);
 
         });
     });
