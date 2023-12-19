@@ -4,6 +4,9 @@ const apiKey = "d7b53c91bdd2abe33da074c99abbbe36";
 // Variables
 let lat, lon;
 
+// Document Elements
+const historyDiv = $("#history");
+
 // On input submit, modify the cityName stored in the variable
 $("#search-form").on("submit", function (e) {
   // Preventing Default
@@ -40,6 +43,7 @@ $("#search-form").on("submit", function (e) {
         }
       };
 
+      // Calling history update
       updateHistory(cityName);
 
       // Fectching the data using the URL
@@ -49,6 +53,23 @@ $("#search-form").on("submit", function (e) {
         })
         .then(function (data) {
           console.log(data);
+
+          // Display the search History
+          let history = JSON.parse(localStorage.getItem("searchHistory")) || [];
+
+          // Clear History to prepare for updated array
+          historyDiv.empty();
+
+          // For each element of the history array, generate a button
+          for (let city of history) {
+            const historyButton = $("<button>")
+              .addClass("list-group-item btn btn-secondary mb-3")
+              .text(city)
+              .on("click", function () {
+                // TO IMPLEMENT DISPLAY FUCNTION
+              });
+            historyDiv.prepend(historyButton);
+          }
         });
     });
 });
