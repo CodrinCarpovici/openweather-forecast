@@ -6,8 +6,12 @@ let lat, lon;
 
 // On input submit, modify the cityName stored in the variable
 $("#search-form").on("submit", function (e) {
+  // Preventing Default
   e.preventDefault();
-  const cityName = $("#search-input").val().trim();
+  // Storing input value
+  const cityValue = $("#search-input").val().trim();
+  // Capitalizing first letter of input value
+  const cityName = cityValue.charAt(0).toUpperCase() + cityValue.slice(1);
   // City Query URL
   const cityQueryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
 
@@ -29,6 +33,7 @@ $("#search-form").on("submit", function (e) {
       const updateHistory = (city) => {
         let history = JSON.parse(localStorage.getItem("searchHistory")) || [];
 
+        // Checking if search is not in history already
         if (!history.includes(city)) {
           history.push(city);
           localStorage.setItem("searchHistory", JSON.stringify(history));
